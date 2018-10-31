@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 //import models
 var Order = require('../models/order');
 var Product = require('../models/product');
+var checkAuth = require("./middlewares/checkauth");
 
-router.get('/', (req, res) => {
+
+router.get('/', checkAuth, (req, res) => {
     Order.find()
     .select("productId quantity")
    .populate('product')
