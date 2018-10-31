@@ -17,6 +17,7 @@ app.use((req,res, next) => {
 //routes for requests
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
+const usersRoutes = require('./api/routes/users');
 
 var mongoDB = 'mongodb://localhost/inventra';
 //connect database
@@ -37,6 +38,7 @@ app.use(bodyParser.json());
 //configure middlewares
 app.use('/products',productRoutes);
 app.use('/orders',ordersRoutes);
+app.use('/users',usersRoutes);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");
