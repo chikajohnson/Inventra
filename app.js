@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 app.use((req,res, next) => {
     res.header('Access-Control-Allow-Origin', "*");
@@ -17,11 +18,17 @@ app.use((req,res, next) => {
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
-// app.use((req, res, next) => {
-//     next();
-//     console.log("Its working");
-//     res.status(200).json({message:"it works"});   
-// });
+var mongoDB = 'mongodb://localhost/inventra';
+//connect database
+try{
+  mongoose.connect(mongoDB);
+  console.log("Connecting to mongodb");
+}
+catch(ex){
+  var db = mongoose.connection();
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+}
+mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: false}));
